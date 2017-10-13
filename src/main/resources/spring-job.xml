@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 这边主要做的是定时器Quertz的配置 -->
+
+    <!-- 声明Quartz的业务对象Bean -->
+    <bean id="taskJob" class="com.WorkAttendance.common.task.AttendCheckTask"/>
+
+    <!-- 调度业务逻辑 -->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="concurrent" value="false"/>
+        <property name="targetObject" ref="taskJob"/>
+        <property name="targetMethod" value="checkAttend"/>
+    </bean>
+
+    <!-- 声明触发器,JobDetail表示一个可执行的业务逻辑, 而每个Trigger支配者每个多长时间调度一次业务逻辑. -->
+    <bean id="attendCheck" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="cronExpression">
+            <value>0/30 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 设置调度工厂: 里面有很多的JobDetail和Trigger,每个JobDetail对应一个Trigger也就是对应一个任务 -->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="attendCheck"/>
+            </list>
+        </property>
+    </bean>
+</beans>

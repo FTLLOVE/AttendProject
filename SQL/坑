@@ -1,0 +1,12 @@
+8.9   考勤分页数据前端显示错误   原因：JS生成列与展示列没有对应
+
+8.10  考勤加入定时器框架后spring启动报错  Implementing class   原因：导入了类似的包后起冲突  shiro-quartz与 quartz ，去掉shiro-quartz后正常启动
+
+8.13  视频里面补签表re_attend 表里面少了attend_date列
+
+8.14  spring整合shiro实现认证.权限功能   认证：报错  Session already invalidated;
+                                           解决方法：用户登出方法使用了 session.invalidate()方法，需注释掉；
+                                           原因： 使用shiro框架认证登陆时使用的是shiro自身的session，HttpSession session并未使用，所以
+                                    使用session.invalidate()报错
+                                    权限: 使用注解授权失效
+                                    原因：spring-MVC里面未配置打开使用shiro注解的配置

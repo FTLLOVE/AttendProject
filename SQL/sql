@@ -1,0 +1,50 @@
+CREATE DATABASE work_attendance;
+USE work_attendance;
+
+CREATE TABLE user
+(
+  id         BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  username   VARCHAR(255)           NOT NULL
+  COMMENT '用户名',
+  password   VARCHAR(255)           NOT NULL
+  COMMENT '密码',
+  mobile     VARCHAR(255) COMMENT '电话',
+  real_name  VARCHAR(255)           NOT NULL
+  COMMENT '真实名称',
+  head_image VARCHAR(255) COMMENT '头像'
+);
+
+CREATE TABLE attend
+(
+  id             BIGINT(20) PRIMARY KEY NOT NULL
+  COMMENT '主键' AUTO_INCREMENT,
+  user_id        BIGINT(20)             NOT NULL
+  COMMENT '员工的ID',
+  attend_date    DATE                   NOT NULL
+  COMMENT '打卡的日期',
+  attend_week    TINYINT(2)             NOT NULL
+  COMMENT '打卡的星期',
+  attend_morning TIME COMMENT '早上打卡的时间',
+  attend_evening TIME COMMENT '晚上打卡的时间',
+  absence        INT(10) COMMENT '缺勤的时长',
+  attend_status  TINYINT(2) DEFAULT '1' NOT NULL
+  COMMENT '考勤状态,1表示正常上班，2表示异常'
+);
+
+-- auto-generated definition
+create table work_attendance.re_attend
+(
+	id BIGINT(19) auto_increment primary key,
+	attend_id BIGINT(19) not null,
+	attend_date DATE(10) null,
+	re_attend_starter VARCHAR(50) not null,
+	re_attend_eve TIME(8) null,
+	re_attend_mor TIME(8) null,
+	current_handler VARCHAR(50) null,
+	status TINYINT(3) null,
+	comments VARCHAR(255) null
+)
+;
+
+
+

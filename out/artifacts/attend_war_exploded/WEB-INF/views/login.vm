@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Log in</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../../static/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../static/plugins/iCheck/square/blue.css">
+    <script src="../../static/jquery/jquery-2.2.3.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/plugins/iCheck/icheck.min.js"></script>
+##    <script src="../../static/js/login.js" type="text/javascript"></script>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <font style="font-family: -webkit-pictograph;">Attendance System</font>
+    </div>
+
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="userName" id="user" name="username">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            <span id="user_alert" style="color: red;visibility: hidden">please enter userName</span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" class="form-control" placeholder="Password" id="pwd" name="password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span id="pwd_alert" style="color: red;visibility: hidden">please enter password</span>
+
+        </div>
+        <div class="row" id="login_error" style="visibility: hidden;color: red">
+            <div class="col-md-6 col-md-offset-1">
+                <span class="text-danger text-bold">用户名或者密码错误</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px">
+            <div class="col-xs-3 col-md-offset-5">
+                <button type="button" class="btn btn-info">Sign Up</button>
+            </div>
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-success" id="submitId">Sign In</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#submitId").click(function () {
+            var user = $("#user").val();
+            var pwd = $("#pwd").val();
+            var veryfiy = true;
+            if (user.length == 0) {
+                $("#user_alert").css("visibility", "visible");
+                veryfiy = false;
+            } else {
+                $("#user_alert").css("visibility", "hidden");
+            }
+            if (pwd.length == 0) {
+                $("#pwd_alert").css("visibility", "visible");
+                veryfiy = false;
+            } else {
+                $("#pwd_alert").css("visibility", "hidden");
+            }
+            if (veryfiy) {
+                $.ajax({
+                    type: "POST",
+                    url: "/login/check",
+                    data: {"username": user, "password": pwd},
+                    success: function (data) {
+                        if (data == "login_Success") {
+                            console.log("login_success-----------------" + data);
+                            window.location.href = "/user/home";
+                        } else {
+                            console.log("login_error-----------------" + data);
+                            $("#login_error").css("visibility", "visible");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

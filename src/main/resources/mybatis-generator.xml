@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- mybatis-generator 逆向工程 -->
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 去除注释的生成 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+        <!-- 配置数据库的连接-->
+        <jdbcConnection
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://localhost:3306/work_attendance"
+                userId="root"
+                password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- JavaBean的生成,targetPackage表示JavaBean的包名，targetProject表示文件的路径名-->
+        <javaModelGenerator
+                targetPackage="com.WorkAttendance.workflow.entity"
+                targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 映射文件的生成-->
+        <sqlMapGenerator
+                targetPackage="com.WorkAttendance.workflow.dao"
+                targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 指定DAO接口的生成,mapper接口的生成-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.WorkAttendance.workflow.dao"
+                             targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 指数据库里面的表的生成字段 -->
+        <table tableName="re_attend" domainObjectName="ReAttend"/>
+
+    </context>
+</generatorConfiguration>
